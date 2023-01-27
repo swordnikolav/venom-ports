@@ -1,0 +1,19 @@
+# description	: Building blocks for modern GNOME applications 
+# homepage	: https://gitlab.gnome.org/GNOME/libadwaita
+# depends	: gtk4 libsass sassc wayland-protocols
+
+name=libadwaita
+version=1.2.1
+release=1
+source="https://gitlab.gnome.org/GNOME/libadwaita/-/archive/$version/libadwaita-$version.tar.bz2"
+
+build() {
+	venom-meson $name-$version build\
+		-D examples=false \
+		-D vapi=$(scratch isinstalled vala && echo true || echo false) \
+		-D tests=false
+	meson compile -C build
+	DESTDIR=$PKG meson install -C build
+
+	rm -r $PKG/usr/share/locale
+}
