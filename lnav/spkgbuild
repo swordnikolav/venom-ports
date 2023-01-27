@@ -1,0 +1,18 @@
+# description	: A curses-based tool for viewing and analyzing log files 
+# homepage	: https://github.com/tstack/lnav/
+# depends	: ncurses curl pcre2 sqlite3 libarchive
+
+name=lnav
+version=0.11.1
+release=1
+source="$name-$version.tar.gz::https://github.com/tstack/lnav/archive/v$version.tar.gz"
+
+build() {
+	cd $name-$version
+	./autogen.sh
+	./configure --prefix=/usr
+
+	make
+	make DESTDIR=$PKG install
+}
+
