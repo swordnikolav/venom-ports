@@ -1,0 +1,24 @@
+# description	: network exploration or security auditing 
+# homepage	: https://insecure.org
+# depends	: libpcap lua openssl zlib libssh2 
+
+name=nmap
+version=7.93
+release=1
+source="https://nmap.org/dist/$name-$version.tar.bz2"
+
+build() {
+	cd $name-$version
+	./configure --prefix=/usr \
+    	--libexecdir=/usr/lib \
+    	--with-libpcre=included \
+    	--with-liblua=included \
+    	--without-ncat \
+	--without-nping \
+	--without-zenmap \
+    	--without-ndiff \
+    	--disable-nls \
+    	--without-nmap-update
+      make
+      make DESTDIR=$PKG install
+}
